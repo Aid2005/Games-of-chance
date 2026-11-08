@@ -1,2 +1,2 @@
 # Games-of-chance
-A simple C++ casino simulation featuring several games: Dice, Roulette, Slot Machine, and Blackjack. The program tracks the player's money, wins, and losses during gameplay. The player starts with 500 KM. Note: the Game class design is not optimal because it directly inherits from the Player class.
+Interactive CLI casino game written in C++. Allows players to manage a virtual balance, track game statistics, and play multiple mini-games (Dice Game, Roulette, Slot Machine, Blackjack). Built with modern C++ OOP concepts, demonstrating composition over inheritance.
