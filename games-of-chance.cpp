@@ -27,37 +27,46 @@ public:
     }
 };
 
-class Game : public Player {//Game class that inherits Player
+class Game {//Game class
 public:
+    Player player;
     int guess, choice;
+
+    void Statistics() {
+        player.Statistics();
+    }
+
+    float Bankrupt() {
+        return player.Bankrupt();
+    }
 
     void DiceGame() {//Dice game
         cout << "How much money do you want to bet: ";
-        cin >> bet;
+        cin >> player.bet;
         cout << "Choose a number from 1-6: ";
         cin >> guess;
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-        money = money - bet;
+        player.money = player.money - player.bet;
         int dice = rand() % 6 + 1;
 
         cout << "The dice rolled: " << dice << endl;
 
         if (dice != guess) {
-            cout << "You lost! Remaining money: " << money << " KM" << endl;
-            losses++;
+            cout << "You lost! Remaining money: " << player.money << " KM" << endl;
+            player.losses++;
         }
         else {
-            money = money + (bet * 3);
-            cout << "You won! Your money is now: " << money << " KM" << endl;
-            wins++;
+            player.money = player.money + (player.bet * 3);
+            cout << "You won! Your money is now: " << player.money << " KM" << endl;
+            player.wins++;
         }
     }
 
     void Roulette() {//Roulette simulation
         cout << "How much money do you want to bet: ";
-        cin >> bet;
-        money = money - bet;
+        cin >> player.bet;
+        player.money = player.money - player.bet;
 
         cout << "Choose an option:\n[1] Black\n[2] Red\n[3] Green\n[4] Pick a number\nChoice: ";
         cin >> choice;
@@ -68,18 +77,18 @@ public:
 
         if (choice == 1 && roll % 2 == 0) {
             cout << "Roulette landed on black " << roll << endl;
-            wins++;
-            money += bet * 2;
+            player.wins++;
+            player.money += player.bet * 2;
         }
         else if (choice == 2 && roll % 2 != 0) {
             cout << "Roulette landed on red " << roll << endl;
-            wins++;
-            money += bet * 2;
+            player.wins++;
+            player.money += player.bet * 2;
         }
         else if (choice == 3 && roll == 0) {
             cout << "Roulette landed on green (0)" << endl;
-            wins++;
-            money += bet * 14;
+            player.wins++;
+            player.money += player.bet * 14;
         }
         else if (choice == 4) {
             int number;
@@ -88,15 +97,15 @@ public:
 
             if (number == roll) {
                 cout << "You guessed the correct number!" << endl;
-                wins++;
-                money += bet * 14;
+                player.wins++;
+                player.money += player.bet * 14;
             }
             else {
                 cout << "Wrong number!" << endl;
-                losses++;
+                player.losses++;
             }
 
-            cout << "Your money is: " << money << " KM" << endl;
+            cout << "Your money is: " << player.money << " KM" << endl;
         }
         else {
             cout << "You lost!" << endl;
@@ -106,8 +115,8 @@ public:
             else
                 cout << "Roulette landed on red " << roll << endl;
 
-            losses++;
-            cout << "Your money is: " << money << " KM" << endl;
+            player.losses++;
+            cout << "Your money is: " << player.money << " KM" << endl;
         }
     }
 
@@ -115,10 +124,10 @@ public:
         int one = 0, two = 0, three = 0;
 
         cout << "How much money do you want to bet: ";
-        cin >> bet;
+        cin >> player.bet;
 
         cout << "\n#######\n#";
-        money -= bet;
+        player.money -= player.bet;
 
         for (int i = 0; i < 3; i++) {
             int x = rand() % 3 + 1;
@@ -132,13 +141,13 @@ public:
         cout << "\n#######" << endl;
 
         if (one == 3 || two == 3 || three == 3) {
-            money += bet * 5;
-            cout << "You won! Your money is: " << money << " KM" << endl;
-            wins++;
+            player.money += player.bet * 5;
+            cout << "You won! Your money is: " << player.money << " KM" << endl;
+            player.wins++;
         }
         else {
-            cout << "You lost! Your money is: " << money << " KM" << endl;
-            losses++;
+            cout << "You lost! Your money is: " << player.money << " KM" << endl;
+            player.losses++;
         }
     }
 
@@ -146,8 +155,8 @@ public:
         int card, playerSum = 0, dealerSum = 0, draw;
 
         cout << "How much money do you want to bet: ";
-        cin >> bet;
-        money -= bet;
+        cin >> player.bet;
+        player.money -= player.bet;
 
         cout << "RULES: Enter 0 if you don't want to draw another card.\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
@@ -161,8 +170,8 @@ public:
             cin >> draw;
 
             if (playerSum > 21) {
-                cout << "You busted! Your money is: " << money << " KM" << endl;
-                losses++;
+                cout << "You busted! Your money is: " << player.money << " KM" << endl;
+                player.losses++;
                 break;
             }
 
@@ -178,28 +187,28 @@ public:
 
         if (dealerSum > 21 && playerSum <= 21) {
             cout << "You won! Dealer had " << dealerSum << endl;
-            money += bet * 2;
-            wins++;
+            player.money += player.bet * 2;
+            player.wins++;
         }
         else if (playerSum > dealerSum && playerSum <= 21) {
             cout << "You won! Dealer had " << dealerSum << endl;
-            money += bet * 2;
-            wins++;
+            player.money += player.bet * 2;
+            player.wins++;
         }
         else if (playerSum < dealerSum && playerSum <= 21) {
             cout << "You lost! Dealer had " << dealerSum << endl;
-            losses++;
+            player.losses++;
         }
         else if (playerSum == dealerSum) {
             cout << "Draw!" << endl;
-            money += bet;
+            player.money += player.bet;
         }
         else if (playerSum > 21 && dealerSum > 21) {
             cout << "Draw! Dealer had " << dealerSum << endl;
-            money += bet;
+            player.money += player.bet;
         }
 
-        cout << "Your money is: " << money << " KM" << endl;
+        cout << "Your money is: " << player.money << " KM" << endl;
     }
 };
 
